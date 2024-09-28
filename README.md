@@ -23,6 +23,16 @@ For the assignment, consider the following questions:
 
 [Documentation](https://www.notion.so/Technical-Assignment-Prioritizing-Medical-Supplies-in-Overwhelmed-Ports-d1853202dd7d4ee5be5beb0e6a1618b4?pvs=4)
 
+## Working like one
+
+- We use prettier to keep consistency on code with `.prettierrc` and `.prettierignore`
+- Set `Editor: Format on Save` to format on the flight
+
+## Generate supabase type
+
+- `npx supabase login`
+- `npx supabase gen types typescript --project-id "SUPABASE_ID" --schema public > ./types/supabase.ts`
+
 ## Nuxt UI Pro
 
 [![Nuxt UI Pro](https://img.shields.io/badge/Made%20with-Nuxt%20UI%20Pro-00DC82?logo=nuxt.js&labelColor=020420)](https://ui.nuxt.com/pro)
@@ -31,9 +41,12 @@ For the assignment, consider the following questions:
 - [Play on Stackblitz](https://stackblitz.com/github/nuxt-ui-pro/dashboard)
 - [Documentation](https://ui.nuxt.com/pro/getting-started)
 
+
 ## Quick Start
 
-```bash [Terminal]
+- Copy `.env.local` in `.env` to run the project
+
+```bash
 npx nuxi init -t github:nuxt-ui-pro/dashboard
 ```
 
