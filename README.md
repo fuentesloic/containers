@@ -31,7 +31,7 @@ For the assignment, consider the following questions:
 ## Generate supabase type
 
 - `npx supabase login`
-- `npx supabase gen types typescript --project-id "SUPABASE_ID" --schema public > ./types/supabase.ts`
+- `npx supabase gen types typescript --project-id "SUPABASE_ID" --schema public > ./app/types/supabase.ts`
 
 ## Nuxt UI Pro
 
