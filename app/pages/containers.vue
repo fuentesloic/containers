@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { computed, watchEffect, ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import { useContainersStore } from "@/store/containers";
 import { PriorityLevel, priorityLevels } from "@/types/enums/PriorityLevel";
-import { pickupStatuses } from "@/types/enums/PickupStatus";
-import { containerStatuses } from "@/types/enums/ContainerStatus";
+import { PickupStatus, pickupStatuses } from "@/types/enums/PickupStatus";
+import { ContainerStatus, containerStatuses } from "@/types/enums/ContainerStatus";
 
 const route = useRoute();
 const router = useRouter();
-
 const containersStore = useContainersStore();
 
 const selectedPriorityLevels = ref(["critical"]);
@@ -41,14 +38,14 @@ onMounted(() => {
   }
 
   if (query.aiPriorityScoreMin) {
-    aiPriorityScoreMin.value = parseInt(query.aiPriorityScoreMin, 10);
+    aiPriorityScoreMin.value = parseInt(query.aiPriorityScoreMin as string, 10);
   }
 
   if (query.aiPriorityScoreMax) {
-    aiPriorityScoreMax.value = parseInt(query.aiPriorityScoreMax, 10);
+    aiPriorityScoreMax.value = parseInt(query.aiPriorityScoreMax as string, 10);
   }
 
-  fetchContainers();
+  updateQueryAndFetch();
 });
 
 const fetchContainers = async () => {
@@ -57,14 +54,19 @@ const fetchContainers = async () => {
   try {
     await containersStore.getContainers(
       {
-        priorityLevel: selectedPriorityLevels.value,
-        containerStatus: selectedContainerStatuses.value,
-        pickupStatus: selectedPickupStatuses.value,
+        priorityLevel: selectedPriorityLevels.value as
+          | PriorityLevel
+          | PriorityLevel[],
+        containerStatus: selectedContainerStatuses.value as
+          | ContainerStatus
+          | ContainerStatus[],
+        pickupStatus: selectedPickupStatuses.value as
+          | PickupStatus
+          | PickupStatus[],
         aiPriorityScoreMin: aiPriorityScoreMin.value,
         aiPriorityScoreMax: aiPriorityScoreMax.value,
       },
-      containersStore.page, // Pass the current page
-      containersStore.limit // Pass the limit
+      containersStore.page // Pass the current page
     );
   } catch (error) {
     console.error("Error fetching containers:", error);
@@ -312,11 +314,13 @@ const containers = computed(() =>
                   <UButton
                     color="red"
                     variant="solid"
-                    @click="contactTrucker(row.carrierId)"
                   >
                     Contact Trucker Dispatcher
                   </UButton>
-                  <UButton color="blue" variant="solid">
+                  <UButton
+                    color="blue"
+                    variant="solid"
+                  >
                     Generate Pickup Plan
                   </UButton>
                 </div>
@@ -328,9 +332,7 @@ const containers = computed(() =>
         <UPagination
           v-model="containersStore.page"
           :total="containersStore.totalCount"
-          :page-count="
-            Math.ceil(containersStore.totalCount / containersStore.limit)
-          "
+          :page-count="containersStore.totalCount"
           class="ml-auto mt-4"
           show-last
           show-first
