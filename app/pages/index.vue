@@ -259,11 +259,11 @@ onMounted(async () => {
                     $router.push({
                       path: '/containers',
                       query: {
-                        priorityLevel: ['low', 'normal'],
+                        priorityLevel: ['high', 'critical'],
                         aiPriorityScoreMin: 80,
-                        containerStatus: 'ready_for_pickup',
-                        pickupStatus: 'unassigned',
-                        scanned: true,
+                        aiPriorityScoreMax: 100,
+                        containerStatus: ['ready_for_pickup', 'scanned'],
+                        pickupStatus: ['unassigned', 'canceled'],
                       },
                     })
                   "
@@ -295,8 +295,10 @@ onMounted(async () => {
                       path: '/containers',
                       query: {
                         priorityLevel: ['low', 'normal'],
+                        containerStatus: ['pending_unload', 'rejected'],
                         aiPriorityScoreMin: 80,
-                        scanned: false,
+                        aiPriorityScoreMax: 100,
+                        pickupStatus: ['unassigned', 'canceled'],
                       },
                     })
                   "

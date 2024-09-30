@@ -332,7 +332,7 @@ const containers = computed(() =>
         <UPagination
           v-model="containersStore.page"
           :total="containersStore.totalCount"
-          :page-count="containersStore.totalCount"
+          :page-count="Math.ceil(containersStore.totalCount / containersStore.limit)"
           class="ml-auto mt-4"
           show-last
           show-first
